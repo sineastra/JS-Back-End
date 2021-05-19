@@ -4,13 +4,15 @@ const homePage = require('../controllers/homePageController.js')
 const addBreed = require('../controllers/addBreedController.js')
 const addCat = require('../controllers/addCatController.js')
 const staticFile = require('../controllers/getContentType.js')
+const editCat = require('../controllers/editCatController.js')
+const newHome = require('../controllers/newHomeController.js')
 
 router.registerHandler('/', homePage)
 router.registerHandler('/add-breed', addBreed)
 router.registerHandler('/add-cat', addCat)
 router.registerHandler('/content', staticFile)
-// router.registerHandler('/', homePage)
-// router.registerHandler('/', homePage)
+router.registerHandler('/edit', editCat)
+router.registerHandler('/new-home', newHome)
 
 const server = http.createServer(requestHandler)
 

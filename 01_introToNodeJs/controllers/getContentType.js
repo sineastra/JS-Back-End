@@ -7,7 +7,7 @@ const getContentType = (url) => {
 	switch (extension) {
 		case 'css':
 			return 'text/css'
-		case 'html' || 'htm' :
+		case 'html':
 			return 'text/html'
 		case 'jpg':
 			return 'image/jpeg'
@@ -21,7 +21,6 @@ const getContentType = (url) => {
 module.exports = (req, res) => {
 	const url = `..${req.url}`
 	fs.readFile(url, (e, content) => {
-		console.log("CONTENT --------------------------" + content)
 		res.writeHead(200, { 'Content-Type': getContentType(url) })
 		res.write(content, 'utf-8')
 		res.end()

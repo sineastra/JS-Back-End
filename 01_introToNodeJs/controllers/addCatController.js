@@ -16,7 +16,7 @@ module.exports = (req, res) => {
 			res.end()
 		})
 	} else if (req.method === 'POST') {
-		const form = new formidable.IncomingForm()
+		const form = formidable.IncomingForm()
 
 		form.parse(req, (err, fields, files) => {
 			if (fields.name && fields.description && fields.breed && files.upload.name) {
