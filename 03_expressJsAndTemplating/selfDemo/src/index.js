@@ -5,8 +5,16 @@ const app = express()
 const port = 3000
 
 const formValidator = (req, res, next) => {
-    if (/.+@.+\..+/g.test(req.body.email)) {
-        next()
+    if (/.+@.+\..+/g.test(req.body.email) && req.body.password.length > 3) {
+        if (req.body.rePass) {
+            if (req.body.rePass === req.body.password) {
+                next()
+            } else {
+                res.redirect("/bad-login")
+            }
+        } else {
+            next()
+        }
     } else {
         res.redirect("/bad-login")
     }
@@ -38,16 +46,19 @@ app.post("/login", express.urlencoded({ extended: false }), formValidator, (req,
     res.redirect("/congratz")
 })
 
-app.get('/register', (req, res) => {
-    res.render('register', {
-        style: "registerStyle.css"
+app.get("/register", (req, res) => {
+    res.render("register", {
+        style: "registerStyle.css",
     })
+})
+
+app.post("/register", express.urlencoded({ extended: false }), formValidator, (req, res) => {
+    res.redirect("/congratz")
 })
 
 app.get("/congratz", (req, res) => {
     res.render("congratz")
 })
-
 
 app.get("/bad-login", (req, res) => res.render("bad-login"))
 
