@@ -1,0 +1,28 @@
+body {
+    background-color: antiquewhite;
+    margin-top: 0;
+}
+
+#headerContainer {
+    display: flex;
+    justify-content: space-around;
+    background-color: darkcyan;
+    padding: 5px;
+}
+
+.navItem {
+    display: inline-block;
+}
+
+.navLink {
+    text-decoration: double;
+    color: black;
+    padding-left: 100px;
+    padding-right: 100px;
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+}
+
+.homePageHeadingWrapper {
+    text-align: center;
+}
