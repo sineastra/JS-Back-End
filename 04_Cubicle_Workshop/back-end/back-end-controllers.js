@@ -31,12 +31,11 @@ const insertEntry = async entry => {
     }
 }
 
-const getAllEntries = async () => {
-    return Object.entries(data).map(x => ({
-        ...{ id: x[1].id },
+const getAllEntries = async () =>
+    Object.entries(data).map(x => ({
+        ...{ id: x[0] },
         ...x[1],
     }))
-}
 
 const getEntryById = async id => {
     try {

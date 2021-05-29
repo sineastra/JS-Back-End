@@ -9,7 +9,6 @@ module.exports = {
             imageUrl: req.body.imageUrl,
             difficultyLevel: req.body.difficultyLevel,
         }
-        console.log(cube)
         await req.dbController.insertEntry(cube)
 
         res.redirect("/")
