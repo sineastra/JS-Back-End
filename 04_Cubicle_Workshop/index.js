@@ -2,6 +2,8 @@ const express = require("express")
 const hbs = require("express-handlebars")
 const { dbInit } = require("./back-end/back-end-controllers")
 const { createGet, createPost } = require("./controllers/create")
+const home = require("./controllers/home")
+const about = require("./controllers/about")
 
 const app = express()
 const port = 3000
@@ -21,12 +23,9 @@ async function start() {
     app.use(express.urlencoded({ extended: false }))
     app.use(await dbInit())
 
-    app.get("/", (req, res) => {
-        res.render("index")
-    })
-    app.get("/about", (req, res) => {
-        res.render("about")
-    })
+    app.get("/", home)
+
+    app.get("/about")
 
     app.get("/create", createGet)
     app.post("/create", createPost)
