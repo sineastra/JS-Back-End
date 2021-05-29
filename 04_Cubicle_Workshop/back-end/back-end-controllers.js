@@ -5,7 +5,7 @@ let data = {}
 
 const dbInit = async () => {
     try {
-        data = await JSON.parse(fs.readFile("./back-end/database.json"))
+        data = JSON.parse(await fs.readFile("./back-end/database.json"))
     } catch (e) {
         console.log(`Problem with DB initialization. -> ${e}`)
     }
@@ -22,10 +22,10 @@ const dbInit = async () => {
 
 const insertEntry = async entry => {
     const id = idFactory()
+    data[id] = entry
 
     try {
-        data = { ...data, ...{ id, entry } }
-        await fs.writeFile(JSON.stringify(data))
+        await fs.writeFile("./back-end/database.json", JSON.stringify(data, null, 4))
     } catch (e) {
         console.log(`Error - ${e} while trying to write to the Database`)
     }
