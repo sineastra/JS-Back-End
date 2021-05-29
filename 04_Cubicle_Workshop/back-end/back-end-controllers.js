@@ -15,6 +15,7 @@ const dbInit = async () => {
             insertEntry,
             getAllEntries,
             getEntryById,
+            getMinMaxDifficulty,
         }
         next()
     }
@@ -29,6 +30,12 @@ const insertEntry = async entry => {
     } catch (e) {
         console.log(`Error - ${e} while trying to write to the Database`)
     }
+}
+
+const getMinMaxDifficulty = () => {
+    const difficulties = Object.entries(data).map(x => Number(x[1].difficultyLevel))
+
+    return [Math.min(...difficulties), Math.max(...difficulties)]
 }
 
 const getAllEntries = async () =>
@@ -50,4 +57,5 @@ module.exports = {
     insertEntry,
     getAllEntries,
     getEntryById,
+    getMinMaxDifficulty,
 }
