@@ -1,6 +1,9 @@
 body {
     background-color: antiquewhite;
     margin-top: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 #headerContainer {
@@ -25,4 +28,9 @@ body {
 
 .homePageHeadingWrapper {
     text-align: center;
+}
+
+footer {
+    text-align: center;
+    margin-top: auto;
 }
