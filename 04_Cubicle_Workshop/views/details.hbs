@@ -1,9 +1,22 @@
 {{#with cube}}
     <h1>{{name}}</h1>
-    <img class="cube" src="{{imageUrl}}" />
+    <img class="cube" src="{{imageUrl}}"/>
     <div class="details">
         <p><span>Description:</span>{{description}}</p>
         <p><span>Difficulty level:</span> {{difficultyLevel}}</p>
         <a class="btn" href="/">Back</a>
+    </div>
+    <h2>Accessories</h2>
+    <div class="accessories">
+        {{#with accessories}}
+            {{#each}}
+                <div class="accessory">
+                    <img src="{{imageUrl}}"
+                         alt="stickerName">
+                    <h3>{{name}}</h3>
+                    <p>{{description}}</p>
+                </div>
+            {{/each}}
+        {{/with}}
     </div>
 {{/with}}
