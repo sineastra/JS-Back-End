@@ -1,8 +1,8 @@
 module.exports = {
-	createGet (req, res) {
-		res.render('create')
+	createCubeGet (req, res) {
+		res.render('createCube')
 	},
-	async createPost (req, res) {
+	async createCubePost (req, res) {
 		const cube = {
 			name: req.body.name,
 			description: req.body.description,

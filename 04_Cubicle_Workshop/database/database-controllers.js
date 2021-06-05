@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Cube = require('./models/Cube.js')
+const Accessory = require('./models/Accessory.js')
 
 const dbInit = async () => {
 	try {
@@ -16,19 +17,12 @@ const dbInit = async () => {
 	return (req, res, next) => {
 		req.dbController = {
 			insertCube,
+			insertAccessory,
 			getAllCubes,
 			getCubeById,
 			filterByFieldValues,
 		}
 		next()
-	}
-}
-
-const insertCube = async entry => {
-	try {
-		await new Cube(entry).save()
-	} catch (e) {
-		console.log(`Error - ${e} while trying to write to the Database`)
 	}
 }
 
@@ -65,9 +59,21 @@ const getCubeById = async id => {
 	}
 }
 
+const insert = async (model, entry) => {
+	try {
+		await new model(entry).save()
+	} catch (e) {
+		console.log(`Error - ${e} while trying to write to the Database`)
+	}
+}
+
+const insertAccessory = async (entry) => insert(Accessory, entry)
+const insertCube = async entry => insert(Cube, entry)
+
 module.exports = {
 	dbInit,
 	insertCube,
+	insertAccessory,
 	getAllCubes,
 	getCubeById,
 	filterByFieldValues,
