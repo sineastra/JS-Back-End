@@ -1,6 +1,6 @@
 const express = require("express")
 const hbs = require("express-handlebars")
-const { dbInit } = require("./back-end/back-end-controllers")
+const { dbInit } = require("./database/database-controllers")
 const { createGet, createPost } = require("./controllers/create")
 const home = require("./controllers/home")
 const about = require("./controllers/about")
@@ -34,5 +34,5 @@ async function start() {
         res.render("404")
     })
 
-    app.listen(port, () => console.log(`Server starded on port ${port}`))
+    app.listen(port, () => console.log(`Server started on port ${port}`))
 }
