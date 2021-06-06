@@ -18,6 +18,8 @@ const dbInit = async () => {
 		req.dbController = {
 			insertCube,
 			insertAccessory,
+			getAvailableAccessories,
+			getAccessoryById,
 			getAllCubes,
 			getCubeById,
 			filterByFieldValues,
@@ -50,14 +52,8 @@ const filterByFieldValues = async (queryParams) => {
 	return result
 }
 
-
-const getCubeById = async id => {
-	try {
-		return Cube.findOne({ _id: id })
-	} catch (e) {
-		console.log(`Error while trying to get item from Database -> ${e}`)
-	}
-}
+const getAvailableAccessories = async (_id) =>
+	await Accessory.find({}).where('cubes').nin([_id])
 
 const insert = async (model, entry) => {
 	try {
@@ -67,13 +63,26 @@ const insert = async (model, entry) => {
 	}
 }
 
+const getById = async (model, id) => {
+	try {
+		return model.findOne({ _id: id })
+	} catch (e) {
+		console.log(`Error while trying to get item from Database -> ${e}`)
+	}
+}
+
+const getCubeById = async id => getById(Cube, id)
+const getAccessoryById = async id => getById(Accessory, id)
+
 const insertAccessory = async (entry) => insert(Accessory, entry)
 const insertCube = async entry => insert(Cube, entry)
 
 module.exports = {
 	dbInit,
 	insertCube,
+	getAccessoryById,
 	insertAccessory,
+	getAvailableAccessories,
 	getAllCubes,
 	getCubeById,
 	filterByFieldValues,

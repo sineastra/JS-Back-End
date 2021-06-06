@@ -1,10 +1,12 @@
 module.exports = async (req, res) => {
-    const id = req.params.id
-    const cube = await req.dbController.getCubeById(id)
-    console.log(cube)
+	const id = req.params.id
+	const cube = await req.dbController.getCubeById(id)
+	const populated = await cube.populate('accessories').execPopulate()
 
-    res.render("details", {
-        title: cube.name,
-        cube,
-    })
+	console.log(populated.accessories)
+	res.render('details', {
+		title: cube.name,
+		cube,
+		accessories: populated.accessories,
+	})
 }

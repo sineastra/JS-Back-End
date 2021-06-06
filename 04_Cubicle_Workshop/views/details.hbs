@@ -8,15 +8,13 @@
     </div>
     <h2>Accessories</h2>
     <div class="accessories">
-        {{#with accessories}}
-            {{#each}}
-                <div class="accessory">
-                    <img src="{{imageUrl}}"
-                         alt="stickerName">
-                    <h3>{{name}}</h3>
-                    <p>{{description}}</p>
-                </div>
-            {{/each}}
-        {{/with}}
-    </div>
 {{/with}}
+{{#each accessories}}
+        <div class="accessory">
+            <img src="{{imageUrl}}"
+                 alt="stickerName">
+            <h3>{{name}}</h3>
+            <p>{{description}}</p>
+        </div>
+{{/each}}
+</div>
