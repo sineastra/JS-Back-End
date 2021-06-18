@@ -27,6 +27,7 @@ const dbInit = async () => {
 			getUserByName,
 			createUser,
 			updateCube,
+			deleteCube,
 		}
 
 		next()
@@ -36,6 +37,8 @@ const dbInit = async () => {
 const getUserByName = async (name) => await User.findOne({ username: name })
 
 const getAllCubes = async () => await Cube.find({})
+
+const deleteCube = async (_id) => await Cube.findByIdAndDelete(_id)
 
 const updateCube = async (_id, newCube) =>
 	await Cube.findByIdAndUpdate(_id, newCube)
@@ -100,4 +103,5 @@ module.exports = {
 	getUserByName,
 	createUser,
 	updateCube,
+	deleteCube,
 }

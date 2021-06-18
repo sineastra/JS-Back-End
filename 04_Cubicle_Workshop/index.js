@@ -17,6 +17,7 @@ const register = require('./controllers/register')
 const login = require('./controllers/login')
 const logout = require('./controllers/logout')
 const edit = require('./controllers/edit')
+const deleteCube = require('./controllers/delete')
 
 // bloat
 const app = express()
@@ -57,10 +58,12 @@ async function start () {
 	app.get('/details/:id', preloadCube, details)
 	app.get('/create/accessory', userOnly, createAccessoryGet)
 	app.post('/create/accessory', userOnly, createAccessoryPost)
-	app.get('/attach/accessory/:cubeId', userOnly, preloadCube, attachAccessoryGet)
-	app.post('/attach/accessory/:cubeId', userOnly, preloadCube, attachAccessoryPost)
+	app.get('/attach/accessory/:id', userOnly, preloadCube, attachAccessoryGet)
+	app.post('/attach/accessory/:id', userOnly, preloadCube, attachAccessoryPost)
 	app.get('/edit/:id', preloadCube, ownedOnly, edit.get)
 	app.post('/edit/:id', preloadCube, ownedOnly, edit.post)
+	app.get('/delete/:id', preloadCube, ownedOnly, deleteCube.get)
+	app.post('/delete/:id', preloadCube, ownedOnly, deleteCube.post)
 
 	app.all('*', (req, res) => {
 		res.render('404')
