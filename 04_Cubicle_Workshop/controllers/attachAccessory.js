@@ -1,26 +1,24 @@
 module.exports = {
 	async attachAccessoryGet (req, res) {
-		const cube = await req.dbController.getCubeById(req.params.cubeId)
-		const accessories = await req.dbController.getAvailableAccessories(req.params.cubeId)
+		const accessories = await req.dbController.getAvailableAccessories(req.cube._id)
 
 		res.render('attachAccessory', {
-			title: `attach to ${cube.name}`,
-			cube,
+			title: `attach to ${req.cube.name}`,
+			cube: req.cube,
 			accessories,
 		})
 	},
 	async attachAccessoryPost (req, res) {
-		const cube = await req.dbController.getCubeById(req.params.cubeId)
 		const accessory = await req.dbController.getAccessoryById(req.body.accessory)
 
-		if (! cube.accessories.some(x => x._id.equals(accessory._id))) {
-			cube.accessories.push(accessory)
-			accessory.cubes.push(cube)
+		if (! req.cube.accessories.some(x => x._id.equals(accessory._id))) {
+			req.cube.accessories.push(accessory)
+			accessory.cubes.push(req.cube)
 		}
 
-		await cube.save()
+		await req.cube.save()
 		await accessory.save()
 
-		res.redirect(`/details/${cube._id}`)
+		res.redirect(`/details/${req.cube._id}`)
 	},
 }
