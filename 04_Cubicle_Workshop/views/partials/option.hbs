@@ -1,4 +1,2 @@
-<option
-    {{#each attributes}}
-        {{@key}}={{this}}
-    {{/each}}>{{description}}</option>
+<option value="{{value}}"
+        {{#if selected}}selected{{/if}}>{{difficultyLevel}}</option>

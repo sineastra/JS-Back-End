@@ -26,15 +26,19 @@ const dbInit = async () => {
 			filterByFieldValues,
 			getUserByName,
 			createUser,
+			updateCube,
 		}
 
 		next()
 	}
 }
 
-const getUserByName = (name) => User.findOne({ username: name })
+const getUserByName = async (name) => await User.findOne({ username: name })
 
 const getAllCubes = async () => await Cube.find({})
+
+const updateCube = async (_id, newCube) =>
+	await Cube.findByIdAndUpdate(_id, newCube)
 
 const filterByFieldValues = async (queryParams) => {
 	const mappedData = Object.entries(queryParams).reduce((a, [key, value]) => {
@@ -95,4 +99,5 @@ module.exports = {
 	filterByFieldValues,
 	getUserByName,
 	createUser,
+	updateCube,
 }

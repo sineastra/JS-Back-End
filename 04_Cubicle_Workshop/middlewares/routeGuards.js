@@ -3,9 +3,7 @@ module.exports = {
 		! req.user ? next() : res.redirect('/'),
 	userOnly: (req, res, next) =>
 		req.user ? next() : res.redirect('/login'),
-	ownedOnly: async (req, res, next) => {
-		const cube = await req.dbController.getCubeById(req.params.id) || {}
+	ownedOnly: async (req, res, next) =>
+		req.user._id === req.cube.creatorId ? next() : res.redirect('/')
 
-		req.user._id === cube.creatorId ? next() : res.redirect('/')
-	}
 }
