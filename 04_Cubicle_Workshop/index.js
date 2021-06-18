@@ -2,7 +2,7 @@ const express = require('express')
 const hbs = require('express-handlebars')
 const cookieParser = require('cookie-parser')
 const { dbInit } = require('./database/database-controllers')
-const { loginMw, processToken } = require('./middlewares/auth')
+const processToken = require('./middlewares/auth')
 
 // views
 const { createCubeGet, createCubePost } = require('./controllers/createCube')
@@ -41,9 +41,13 @@ async function start () {
 	app.use(await dbInit())
 
 	// routes
-	app.get('/', home)
+	app.get('/', (req, res, next) => {
+		console.log(req.user)
+		next()
+	}, home)
 	app.get('/about', about)
-	app.get('/login', loginMw, login.get)
+	app.get('/login', login.get)
+	app.post('/login', login.post)
 	app.get('/register', register.get)
 	app.post('/register', register.post)
 	app.get('/create/cube', createCubeGet)

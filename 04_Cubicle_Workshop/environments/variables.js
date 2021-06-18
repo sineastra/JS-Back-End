@@ -1,4 +1,4 @@
 module.exports = {
-	tokenName: 'top secure secret',
+	tokenSecret: 'top secure secret',
 	cookieName: 'SESSION_DATA'
 }
