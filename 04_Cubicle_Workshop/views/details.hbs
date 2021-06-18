@@ -5,16 +5,22 @@
         <p><span>Description:</span>{{description}}</p>
         <p><span>Difficulty level:</span> {{difficultyLevel}}</p>
         <a class="btn" href="/">Back</a>
-    </div>
-    <h2>Accessories</h2>
-    <div class="accessories">
 {{/with}}
-{{#each accessories}}
+{{#if isOwner}}
+    {{#with cube}}
+            <a class="btn" href="/edit/{{_id}}">Edit</a>
+            <a class="btn" href="/delete/{{_id}}">Delete</a>
+    {{/with}}
+{{/if}}
+</div>
+<h2>Accessories</h2>
+<div class="accessories">
+    {{#each accessories}}
         <div class="accessory">
             <img src="{{imageUrl}}"
                  alt="stickerName">
             <h3>{{name}}</h3>
             <p>{{description}}</p>
         </div>
-{{/each}}
+    {{/each}}
 </div>
