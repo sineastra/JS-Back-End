@@ -41,10 +41,7 @@ async function start () {
 	app.use(await dbInit())
 
 	// routes
-	app.get('/', (req, res, next) => {
-		console.log(req.user)
-		next()
-	}, home)
+	app.get('/', home)
 	app.get('/about', about)
 	app.get('/login', login.get)
 	app.post('/login', login.post)

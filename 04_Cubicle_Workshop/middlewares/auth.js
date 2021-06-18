@@ -6,7 +6,9 @@ const processToken = (req, res, next) => {
 
 	if (token) {
 		try {
-			req.user = jwt.verify(token, tokenSecret)
+			const userData = jwt.verify(token, tokenSecret)
+			req.user = userData
+			res.locals.user = userData
 		} catch (e) {
 			res.clearCookie(cookieName)
 			res.redirect('/login')
