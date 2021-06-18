@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
-const Cube = require('./models/Cube.js')
-const Accessory = require('./models/Accessory.js')
+const Cube = require('./models/Cube')
+const Accessory = require('./models/Accessory')
+const User = require('./models/User')
 
 const dbInit = async () => {
 	try {
@@ -23,10 +24,15 @@ const dbInit = async () => {
 			getAllCubes,
 			getCubeById,
 			filterByFieldValues,
+			getUserByName,
+			createUser,
 		}
+
 		next()
 	}
 }
+
+const getUserByName = (name) => User.findOne({ username: name })
 
 const getAllCubes = async () => await Cube.find({})
 
@@ -76,6 +82,7 @@ const getAccessoryById = async id => getById(Accessory, id)
 
 const insertAccessory = async (entry) => insert(Accessory, entry)
 const insertCube = async entry => insert(Cube, entry)
+const createUser = async entry => insert(User, entry)
 
 module.exports = {
 	dbInit,
@@ -86,4 +93,6 @@ module.exports = {
 	getAllCubes,
 	getCubeById,
 	filterByFieldValues,
+	getUserByName,
+	createUser,
 }

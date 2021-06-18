@@ -3,8 +3,6 @@ module.exports = {
 		const cube = await req.dbController.getCubeById(req.params.cubeId)
 		const accessories = await req.dbController.getAvailableAccessories(req.params.cubeId)
 
-		console.log('ACCESSORIES -----' + accessories)
-
 		res.render('attachAccessory', {
 			title: `attach to ${cube.name}`,
 			cube,
