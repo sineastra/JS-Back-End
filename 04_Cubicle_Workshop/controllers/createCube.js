@@ -8,6 +8,7 @@ module.exports = {
 			description: req.body.description,
 			imageUrl: req.body.imageUrl,
 			difficultyLevel: Number(req.body.difficultyLevel),
+			creatorId: req.user._id
 		}
 		await req.dbController.insertCube(cube)
 

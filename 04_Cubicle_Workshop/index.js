@@ -3,6 +3,7 @@ const hbs = require('express-handlebars')
 const cookieParser = require('cookie-parser')
 const { dbInit } = require('./database/database-controllers')
 const processToken = require('./middlewares/auth')
+const { guestOnly, ownedOnly, userOnly } = require('./middlewares/routeGuards')
 
 // views
 const { createCubeGet, createCubePost } = require('./controllers/createCube')
@@ -13,6 +14,7 @@ const { createAccessoryGet, createAccessoryPost } = require('./controllers/creat
 const { attachAccessoryGet, attachAccessoryPost } = require('./controllers/attachAccessory')
 const register = require('./controllers/register')
 const login = require('./controllers/login')
+const logout = require('./controllers/logout')
 
 // bloat
 const app = express()
@@ -43,17 +45,18 @@ async function start () {
 	// routes
 	app.get('/', home)
 	app.get('/about', about)
-	app.get('/login', login.get)
-	app.post('/login', login.post)
-	app.get('/register', register.get)
-	app.post('/register', register.post)
-	app.get('/create/cube', createCubeGet)
-	app.post('/create/cube', createCubePost)
+	app.get('/login', guestOnly, login.get)
+	app.post('/login', guestOnly, login.post)
+	app.get('/register', guestOnly, register.get)
+	app.post('/register', guestOnly, register.post)
+	app.get('/logout', userOnly, logout)
+	app.get('/create/cube', userOnly, createCubeGet)
+	app.post('/create/cube', userOnly, createCubePost)
 	app.get('/details/:id', details)
-	app.get('/create/accessory', createAccessoryGet)
-	app.post('/create/accessory', createAccessoryPost)
-	app.get('/attach/accessory/:cubeId', attachAccessoryGet)
-	app.post('/attach/accessory/:cubeId', attachAccessoryPost)
+	app.get('/create/accessory', userOnly, createAccessoryGet)
+	app.post('/create/accessory', userOnly, createAccessoryPost)
+	app.get('/attach/accessory/:cubeId', userOnly, attachAccessoryGet)
+	app.post('/attach/accessory/:cubeId', userOnly, attachAccessoryPost)
 
 	app.all('*', (req, res) => {
 		console.log(req.user)
