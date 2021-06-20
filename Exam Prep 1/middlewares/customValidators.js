@@ -1,4 +1,4 @@
-const passwordsMatch = (value, req) => {
+const doPasswordsMatch = (value, req) => {
 	if (value !== req.body.rePassword) {
 		throw new Error('Password confirmation does not match password')
 	}
@@ -6,7 +6,7 @@ const passwordsMatch = (value, req) => {
 	return true
 }
 
-const existingUsername = async (username, req) => {
+const isUsernameTaken = async (username, req) => {
 	const existingUsername = await req.dbServices.user.getByUsername(username)
 
 	return existingUsername
@@ -14,7 +14,7 @@ const existingUsername = async (username, req) => {
 		: Promise.resolve('Username does not exist!')
 }
 
-const existingEmail = async (email, req) => {
+const isEmailTaken = async (email, req) => {
 	const existingEmail = await req.dbServices.user.getByEmail(email)
 
 	return existingEmail
@@ -22,7 +22,7 @@ const existingEmail = async (email, req) => {
 		: Promise.resolve('Email does not exist!')
 }
 
-const registeredUser = async (email, req) => {
+const isRegisteredUser = async (email, req) => {
 	const user = await req.dbServices.user.getByEmail(email)
 
 	return user
@@ -32,10 +32,10 @@ const registeredUser = async (email, req) => {
 
 module.exports = (req, res, next) => {
 	req.customValidators = {
-		passwordsMatch,
-		existingUsername,
-		existingEmail,
-		registeredUser,
+		doPasswordsMatch,
+		isUsernameTaken,
+		isEmailTaken,
+		isRegisteredUser,
 	}
 
 	next()

@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema({
 	email: { type: String, required: true, unique: true },
 	username: { type: String, required: true, unique: true },
 	hashedPassword: { type: String, required: true },
-	bookedHotels: Array,
+	bookedHotels: [{ type: 'ObjectId', ref: 'Hotel' }],
 	offeredHotels: Array,
 })
 

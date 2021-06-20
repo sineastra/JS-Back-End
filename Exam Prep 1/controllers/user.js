@@ -25,10 +25,11 @@ const register = async (req, res, next) => {
 	} else {
 		const errorContext = {
 			title: 'Login',
-			errors: errors,
 			username: req.body.username,
 			email: req.body.email,
 		}
+		res.locals.errors = errors.array().map(x => x.msg).join('<br />')
+
 		res.render('register', errorContext)
 	}
 }
@@ -51,9 +52,11 @@ const login = async (req, res, next) => {
 	} else {
 		const errorContext = {
 			title: 'Login',
-			errors: errors,
 			email: req.body.email
 		}
+
+		res.locals.errors = errors.array().map(x => x.msg).join('<br />')
+
 		res.render('login', errorContext)
 	}
 }
@@ -66,15 +69,25 @@ router.post('/register',
 		.trim()
 		.escape()
 		.normalizeEmail()
+		.isAlphanumeric()
+		.withMessage('Email must contain only Latin letters and digits')
 		.isEmail()
-		.custom(async (value, { req }) => await req.customValidators.existingEmail(value, req)),
+		.withMessage('Not a valid email')
+		.custom(async (value, { req }) => await req.customValidators.isEmailTaken(value, req))
+		.withMessage('Email already taken. Please pick another!'),
 	body('username')
 		.trim()
 		.escape()
-		.custom(async (value, { req }) => await req.customValidators.existingUsername(value, req))
+		.custom(async (value, { req }) => await req.customValidators.isUsernameTaken(value, req))
+		.withMessage('Username already taken. PLease pick another!')
 		.customSanitizer(username => username.toLocaleLowerCase()),
 	body('password')
-		.custom((value, { req }) => req.customValidators.passwordsMatch(value, req)),
+		.isLength({ min: 5 })
+		.withMessage('Password must be at least 5 characters long')
+		.isAlphanumeric()
+		.withMessage('Password must contains only Latin letters and digits')
+		.custom((value, { req }) => req.customValidators.doPasswordsMatch(value, req))
+		.withMessage('Passwords do not match!'),
 	register,
 	login)
 
@@ -86,12 +99,23 @@ router.post('/login',
 		.escape()
 		.normalizeEmail()
 		.isEmail()
-		.custom(async (value, { req }) => await req.customValidators.registeredUser(value, req)),
+		.withMessage('Not a valid email')
+		.custom(async (value, { req }) => await req.customValidators.isRegisteredUser(value, req)),
 	login)
 
 router.get('/logout', (req, res) => {
 	res.clearCookie(COOKIE_NAME)
 	res.redirect('/')
+})
+
+router.get('/profile', async (req, res) => {
+	const user = await req.dbServices.user.getById(req.user._id)
+
+	res.render('profile',
+		{
+			title: `${user.username} profile`,
+			user
+		})
 })
 
 module.exports = router

@@ -9,4 +9,10 @@ module.exports = {
 
 	getByEmail: async (email) =>
 		await User.findOne({ email }).lean(),
+
+	update: async (_id, updated) =>
+		await User.findByIdAndUpdate(_id, updated),
+
+	getById: async (_id) =>
+		await User.findById({ _id }).populate('bookedHotels').lean(),
 }

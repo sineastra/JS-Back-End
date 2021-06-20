@@ -25,21 +25,44 @@ router.get('/details/:id', usersOnly, async (req, res) => {
 
 router.get('/details/:id/book', usersOnly, mustNotBeOwner, async (req, res) => {
 	const hotel = await req.dbServices.hotel.getById(req.params.id)
+	const user = await req.dbServices.user.getByEmail(req.user.email)
 
 	hotel.freeRooms -= 1
 	hotel.usersWhoBookedRoom.push(req.user._id)
 
+	user.bookedHotels.push(hotel._id)
+
 	await req.dbServices.hotel.update(hotel._id, hotel)
+	await req.dbServices.user.update(user._id, user)
 
 	res.redirect('/')
 })
 
-router.get('/create', usersOnly, (req, res) => res.render('create'))
-router.post('/create', usersOnly, async (req, res) => {
-	await req.dbServices.hotel.create(hotelFactory(req))
+router.get('/create',
+	usersOnly,
+	(req, res) => res.render('create', { title: 'create hotel', hotel: {} }))
+router.post('/create',
+	usersOnly,
+	body('hotel', 'Hotel name must be at least 4 characters long').isLength({ min: 4 }),
+	body('city', 'City name must be at least 3 characters long').isLength({ min: 3 }),
+	body('imageUrl', 'Image must be a valid URL').isURL(),
+	body('free-rooms', 'Rooms must be between 1 and 100').isInt({ min: 1, max: 100 }),
+	async (req, res) => {
+		const errors = validationResult(req)
+		const hotel = hotelFactory(req)
 
-	res.redirect('/')
-})
+		if (errors.isEmpty()) {
+			await req.dbServices.hotel.create(hotel)
+
+			res.redirect('/')
+		} else {
+			const errorMessages = errors.array().map(x => x.msg).join('<br />')
+			res.locals.errors = errorMessages
+			console.log(errorMessages)
+			res.render('create', { title: 'Create new hotel', hotel })
+		}
+	}
+)
 
 router.get(`/edit/:id`, ownerOnly, async (req, res) => {
 	const hotel = await req.dbServices.hotel.getById(req.params.id)
