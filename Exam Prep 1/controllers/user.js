@@ -35,6 +35,7 @@ const login = async (req, res, next) => {
 	}
 }
 
+
 router.get('/register', guestsOnly, (req, res) => res.render('register'))
 router.post('/register', guestsOnly, register, login)
 
