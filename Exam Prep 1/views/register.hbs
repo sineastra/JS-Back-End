@@ -2,10 +2,11 @@
     <h2>Create your account:</h2>
     <form action="/user/register" method="post" id="formRegister">
         <label for="email">Email:</label>
-        <input type="text" id="email" name="email" placeholder="Email">
+        <input type="text" id="email" name="email" placeholder="Email"
+               value="{{email}}">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username"
-               placeholder="Enter your Username">
+               placeholder="Enter your Username" value="{{username}}">
         <label for="password">Password:</label>
         <input type="password" id="password" name="password"
                placeholder="Password">

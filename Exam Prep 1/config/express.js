@@ -1,7 +1,8 @@
 const express = require('express')
 const hbs = require('express-handlebars')
 const cookieParser = require('cookie-parser')
-const attachValidators = require('../middlewares/validators.js')
+const customValidators = require('../middlewares/customValidators.js')
+
 
 const processAuth = require('../middlewares/auth.js')
 
@@ -14,5 +15,5 @@ module.exports = (app) => {
 	app.use(express.urlencoded({ extended: false }))
 	app.use(cookieParser())
 	app.use(processAuth)
-	app.use(attachValidators)
+	app.use(customValidators)
 }

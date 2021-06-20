@@ -5,5 +5,8 @@ module.exports = {
 		await new User(userData).save(),
 
 	getByUsername: async (username) =>
-		await User.findOne({ username }).lean()
+		await User.findOne({ username }).lean(),
+
+	getByEmail: async (email) =>
+		await User.findOne({ email }).lean(),
 }
