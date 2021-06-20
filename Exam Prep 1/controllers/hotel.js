@@ -54,4 +54,11 @@ router.post(`/edit/:id`, ownerOnly, async (req, res) => {
 
 	res.redirect('/')
 })
+
+router.get('/delete/:id', ownerOnly, async (req, res) => {
+	const hotel = await req.dbServices.hotel.deleteById(req.params.id)
+
+	res.redirect('/')
+})
+
 module.exports = router
