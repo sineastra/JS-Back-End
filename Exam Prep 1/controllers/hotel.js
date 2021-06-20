@@ -11,6 +11,7 @@ const hotelFactory = (req) => ({
 	owner: req.user._id
 })
 
+// Details route
 router.get('/details/:id', usersOnly, async (req, res) => {
 	const hotel = await req.dbServices.hotel.getById(req.params.id)
 
@@ -22,7 +23,6 @@ router.get('/details/:id', usersOnly, async (req, res) => {
 		hotel
 	})
 })
-
 router.get('/details/:id/book', usersOnly, mustNotBeOwner, async (req, res) => {
 	const hotel = await req.dbServices.hotel.getById(req.params.id)
 	const user = await req.dbServices.user.getByEmail(req.user.email)
@@ -38,6 +38,7 @@ router.get('/details/:id/book', usersOnly, mustNotBeOwner, async (req, res) => {
 	res.redirect('/')
 })
 
+// Create route
 router.get('/create',
 	usersOnly,
 	(req, res) => res.render('create', { title: 'create hotel', hotel: {} }))
@@ -64,6 +65,7 @@ router.post('/create',
 	}
 )
 
+// Edit route
 router.get(`/edit/:id`, ownerOnly, async (req, res) => {
 	const hotel = await req.dbServices.hotel.getById(req.params.id)
 
@@ -78,6 +80,7 @@ router.post(`/edit/:id`, ownerOnly, async (req, res) => {
 	res.redirect('/')
 })
 
+// Delete route
 router.get('/delete/:id', ownerOnly, async (req, res) => {
 	const hotel = await req.dbServices.hotel.deleteById(req.params.id)
 

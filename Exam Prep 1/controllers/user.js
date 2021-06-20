@@ -61,7 +61,7 @@ const login = async (req, res, next) => {
 	}
 }
 
-
+//Register route
 router.get('/register', guestsOnly, (req, res) => res.render('register'))
 router.post('/register',
 	guestsOnly,
@@ -91,6 +91,7 @@ router.post('/register',
 	register,
 	login)
 
+// Login route
 router.get('/login', guestsOnly, (req, res) => res.render('login'))
 router.post('/login',
 	guestsOnly,
@@ -103,11 +104,13 @@ router.post('/login',
 		.custom(async (value, { req }) => await req.customValidators.isRegisteredUser(value, req)),
 	login)
 
+// Logout route
 router.get('/logout', (req, res) => {
 	res.clearCookie(COOKIE_NAME)
 	res.redirect('/')
 })
 
+// Profile route
 router.get('/profile', async (req, res) => {
 	const user = await req.dbServices.user.getById(req.user._id)
 
