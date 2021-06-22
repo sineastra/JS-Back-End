@@ -6,17 +6,15 @@
     <div class="info">
         <h4>{{description}}</h4>
         {{#if @root.user}}
-            {{#with @root.user}}
-                <div class="info-buttons">
-                    <a class="btn details" href="/play/details/{{_id}}">Details</a>
-                    <span class="likes">
-                        {{#if usersLiked.length}}
-                            {{usersLiked.length}}
-                        {{else}}
-                            0
-                        {{/if}} likes</span>
-                </div>
-            {{/with}}
+            <div class="info-buttons">
+                <a class="btn details" href="/play/details/{{_id}}">Details</a>
+                <span class="likes">
+                    {{#if (isEmptyArray usersLiked)}}
+                        {{usersLiked.length}}
+                    {{else}}
+                        0
+                    {{/if}} likes</span>
+            </div>
         {{/if}}
     </div>
 </div>

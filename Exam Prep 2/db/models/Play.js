@@ -7,6 +7,7 @@ const PlaySchema = new mongoose.Schema({
 	isPublic: { type: Boolean, default: false },
 	createdAt: { type: Date, required: true },
 	usersLiked: [{ type: 'ObjectID', ref: 'User' }],
+	owner: { type: 'ObjectID', required: true },
 })
 
 const Play = mongoose.model('Play', PlaySchema)

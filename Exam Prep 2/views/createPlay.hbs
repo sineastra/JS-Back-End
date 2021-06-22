@@ -2,7 +2,7 @@
     <h1>Create Theater</h1>
     <div>
         <label htmlFor="title">Theater Title:</label>
-        <input type="text" placeholder="Theater name" name="title" value="{{title}}">
+        <input type="text" placeholder="Theater name" name="title" value="{{playTitle}}">
     </div>
     <div>
         <label htmlFor="description">Theater Description:</label>
@@ -13,8 +13,10 @@
         <input type="text" name="imageUrl" placeholder="Image Url" value="{{imageUrl}}">
     </div>
     <div className="check">
-        <input type="checkbox" id="check-box" name="isPublic" {{#if public}}checked{{/if}}>
+        <input type="checkbox" id="check-box" name="isPublic" {{#if isPublic}}checked{{/if}}>
         <label htmlFor="check-box">Public</label>
     </div>
     <button className="btn" type="submit">Submit</button>
 </form>
+
+

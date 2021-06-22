@@ -2,17 +2,15 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const router = require('express').Router()
 const { TOKEN_SECRET, COOKIE_NAME } = require('../config/variables.js')
-const { guestsOnly } = require('../middlewares/routeGuards.js')
+const { guestsOnly, usersOnly } = require('../middlewares/routeGuards.js')
 const { body, validationResult } = require('express-validator')
 
 const register = async (req, res, next) => {
 	const errors = validationResult(req)
 
 	if (errors.isEmpty()) {
-		console.log(req.body.password)
 		const hashedPassword = await bcrypt.hash(req.body.password, 8)
 
-		// change the fields (DONT FORGET TO CHANGE THE MODEL IN DB/MODELS/USER) also.
 		const newUser = {
 			username: req.body.username,
 			hashedPassword,
@@ -23,8 +21,6 @@ const register = async (req, res, next) => {
 
 		next()
 	} else {
-
-		// if needed change the fields here also.
 		const errorContext = {
 			title: 'Login',
 			username: req.body.username,
@@ -63,14 +59,43 @@ const login = async (req, res) => {
 
 //Register route
 router.get('/register', guestsOnly, (req, res) => res.render('register'))
-router.post('/register', guestsOnly, register, login) // VALIDATORS, AFTER GUEST ONLY
+router.post('/register',
+	body('username')
+		.isLength({ min: 3 })
+		.withMessage('Username must be at least 3 characters long')
+		.isAlphanumeric()
+		.withMessage('Username must consists only latin characters and digits'),
+	body('password')
+		.isLength({ min: 3 })
+		.withMessage('Password must be at least 3 characters long')
+		.isAlphanumeric()
+		.withMessage('Password must consists only latin characters and digits')
+		.custom((value, { req }) => req.customValidators.doPasswordsMatch(value, req))
+		.withMessage('Passwords do not match!'),
+	guestsOnly,
+	register,
+	login,
+) // VALIDATORS, AFTER GUEST ONLY
 
 // Login route
 router.get('/login', guestsOnly, (req, res) => res.render('login'))
-router.post('/login', guestsOnly, login) // VALIDATORS, AFTER GUEST ONLY
+router.post('/login',
+	guestsOnly,
+	body('username')
+		.isLength({ min: 3 })
+		.withMessage('Username must be at least 3 characters long')
+		.isAlphanumeric()
+		.withMessage('Username must consists only latin characters and digits'),
+	body('password')
+		.isLength({ min: 3 })
+		.withMessage('Password must be at least 3 characters long')
+		.isAlphanumeric()
+		.withMessage('Password must consists only latin characters and digits'),
+	login,
+) // VALIDATORS, AFTER GUEST ONLY
 
 // Logout route
-router.get('/logout', (req, res) => {
+router.get('/logout', usersOnly, (req, res) => {
 	res.clearCookie(COOKIE_NAME)
 	res.redirect('/')
 })
