@@ -3,7 +3,6 @@ const hbs = require('express-handlebars')
 const cookieParser = require('cookie-parser')
 const customValidators = require('../middlewares/customValidators.js')
 
-
 const processAuth = require('../middlewares/auth.js')
 
 module.exports = (app) => {

@@ -1,10 +1,10 @@
 const user = require('../db/services/user')
-const play = require('../db/services/play')
+const custom = require('../db/services/custom')
 
 module.exports = (req, res, next) => {
 	req.dbServices = {
 		user,
-		play,
+		custom,
 	}
 
 	next()
