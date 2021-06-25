@@ -1,0 +1,21 @@
+{{#if user}}
+    <div class="shoes">
+        {{#each customs}}
+            {{> custom}}
+        {{else}}
+            <h1>No shoes to display. Be the first to create a new offer...</h1>
+        {{/each}}
+    </div>
+{{else}}
+    <div class="container">
+        <div class="about-us">
+            <div>
+                <img src="/shoes.jpg" alt="">
+                <img src="/shoes2.jpg" alt="">
+            </div>
+            <p>
+                <a href="/user/register">Register or Login Now</a> and Try it!
+            </p>
+        </div>
+    </div>
+{{/if}}

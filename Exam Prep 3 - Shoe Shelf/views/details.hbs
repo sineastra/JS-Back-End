@@ -1,0 +1,25 @@
+<div class="offer-details">
+    <h1>{{name}}</h1>
+    <div class="info">
+        <img src="{{imageUrl}}" alt="">
+        <div class="description">{{description}}
+            <br>
+            <br>
+            <p><strong>Buyers:</strong> {{buyers.length}}</p>
+            <br>
+            <p class="price">${{price}}</p>
+        </div>
+    </div>
+    <div class="actions">
+        {{#if isOwn}}
+            <a href="/custom/edit/{{_id}}">Edit</a>
+            <a href="/custom/delete/{{_id}}">Delete</a>
+        {{else}}
+            {{#if alreadyBought}}
+                <span>You bought it</span>
+            {{else}}
+                <a href="/custom/buy/{{_id}}">Buy</a>
+            {{/if}}
+        {{/if}}
+    </div>
+</div>

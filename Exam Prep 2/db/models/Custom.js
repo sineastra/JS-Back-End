@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const PlaySchema = new mongoose.Schema({
+const CustomSchema = new mongoose.Schema({
 	title: { type: String, unique: true },
 	description: { type: String, required: true, maxLength: 50 },
 	imageUrl: { type: String, required: true },
@@ -10,6 +10,6 @@ const PlaySchema = new mongoose.Schema({
 	owner: { type: 'ObjectID', required: true },
 })
 
-const Play = mongoose.model('Play', PlaySchema)
+const Custom = mongoose.model('Play', CustomSchema)
 
-module.exports = Play
+module.exports = Custom

@@ -1,0 +1,13 @@
+<div class="user-info">
+    <div>
+        <p>Email: <span>{{user.email}}</span></p> |
+        <p>My offers: <span>[{{customs.length}}]</span></p> |
+        <p><a href="/user/logout">Logout</a></p>
+    </div>
+    <div class="shoes">
+        {{#each customs}}
+            {{> customProfile}}
+        {{/each}}
+        <p class="total-profit">Total cost: <span>${{total}}</span></p>
+    </div>
+</div>

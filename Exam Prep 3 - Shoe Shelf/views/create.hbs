@@ -1,0 +1,24 @@
+<h1>Create New Offer</h1>
+{{#if errors}}
+    <p class="message">{{{errors}}}</p>
+{{/if}}
+<form action="/custom/create" method="post">
+    <div>
+        <input type="text" name="name" placeholder="Name...">
+    </div>
+    <div>
+        <input type="text" name="price" placeholder="Price...">
+    </div>
+    <div>
+        <input type="text" name="imageUrl" placeholder="Image url...">
+    </div>
+    <div>
+        <textarea name="description" placeholder="Give us some description about this offer..."></textarea>
+    </div>
+    <div>
+        <input type="text" name="brand" placeholder="Brand...">
+    </div>
+    <div>
+        <button>Create</button>
+    </div>
+</form>

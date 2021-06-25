@@ -1,0 +1,19 @@
+<h1>Login</h1>
+<p class="form-info">Don't have account?
+    <a href="/user/register">Register now</a> and fix that!
+</p>
+<form action="/user/login" method="post">
+    <div>
+        <input type="email" name="email" placeholder="Email..." value="{{email}}">
+    </div>
+
+    <div>
+        <input type="password" name="password" placeholder="Password...">
+    </div>
+    <div>
+        {{#if errors}}
+            <p class="message">{{{errors}}}</p>
+        {{/if}}
+        <button>Login</button>
+    </div>
+</form>
