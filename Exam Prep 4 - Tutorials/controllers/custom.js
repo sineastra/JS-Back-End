@@ -8,6 +8,15 @@ const { createErrorMsg } = require("../helpers/helper")
 router.get("/create", usersOnly, (req, res) => res.render("create"))
 router.post(
 	"/create",
+	body('title')
+		.isLength({ min: 4 })
+		.withMessage("Title at least 4 symbols!"),
+	body('description')
+		.isLength({ min: 20 })
+		.withMessage("Description at least 20 symbols!"),
+	body('imageUrl')
+		.isURL({ protocols: ["http", "https"] })
+		.withMessage("Image must be a valid URL!"),
 	usersOnly, async (req, res) => {
 		const errors = validationResult(req)
 
