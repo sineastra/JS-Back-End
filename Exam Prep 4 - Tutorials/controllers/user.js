@@ -54,10 +54,18 @@ const login = async (req, res) => {
 
 //Register route
 router.get("/register", guestsOnly, (req, res) => res.render("register"))
-router.post(
-	"/register",
+router.post("/register",
 	guestsOnly,
+	body("username")
+		.isLength({ min: 5 })
+		.withMessage("Username at least 5 symbols!")
+		.isAlphanumeric()
+		.withMessage("Username only english letters and digits!!"),
 	body("password")
+		.isLength({ min: 5 })
+		.withMessage("Password at least 5 symbols!")
+		.isAlphanumeric()
+		.withMessage("Password only english letters and digits!!")
 		.custom((value, { req }) => req.customValidators.doPasswordsMatch(value, req))
 		.withMessage("Passwords do not match!"),
 	register,
