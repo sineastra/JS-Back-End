@@ -1,6 +1,5 @@
 const User = require('../models/User.js')
 
-// check if these are good.
 module.exports = {
 	createNew: async (userData) =>
 		await new User(userData).save(),
