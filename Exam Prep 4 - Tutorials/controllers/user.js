@@ -53,10 +53,10 @@ const login = async (req, res) => {
 }
 
 //Register route
-router.get("/register", /*guestsOnly,*/ (req, res) => res.render("register"))
+router.get("/register", guestsOnly, (req, res) => res.render("register"))
 router.post(
 	"/register",
-	/*guestsOnly,*/
+	guestsOnly,
 	body("password")
 		.custom((value, { req }) => req.customValidators.doPasswordsMatch(value, req))
 		.withMessage("Passwords do not match!"),
@@ -65,13 +65,11 @@ router.post(
 ) // VALIDATORS, AFTER GUEST ONLY
 
 // Login route
-router.get("/login", /*guestsOnly,*/ (req, res) => res.render("login"))
-router.post("/login", /*guestsOnly,*/ login) // VALIDATORS, AFTER GUEST ONLY
+router.get("/login", guestsOnly, (req, res) => res.render("login"))
+router.post("/login", guestsOnly, login) // VALIDATORS, AFTER GUEST ONLY
 
 // Logout route
-router.get(
-	"/logout",
-	/*usersOnly,*/ (req, res) => {
+router.get("/logout", usersOnly, (req, res) => {
 		res.clearCookie(COOKIE_NAME)
 		res.redirect("/")
 	},

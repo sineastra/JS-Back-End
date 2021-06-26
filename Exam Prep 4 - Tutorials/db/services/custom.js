@@ -8,7 +8,14 @@ module.exports = {
 	updateById: async (id, updated) =>
 		await Custom.findByIdAndUpdate(id, updated, { runValidators: true }),
 	getAllSortedByCreateTime: async (type) =>
-		await Custom.find({}).sort({ createdAt: type }),
+		await Custom.find({}).sort({ createdAt: type }).lean(),
 	getTopNSortedByEnrolled: async (type, n) =>
-		await Custom.find({}).sort({ usersEnrolled: type }).slice('Courses', n),
+		await Custom.find({}).sort({ usersEnrolled: type }).slice('Courses', n).lean(),
+	enroll: async (customId, userId) => {
+		const custom = await Custom.findById(customId)
+
+		custom.usersEnrolled.push(userId)
+
+		custom.save()
+	},
 }
