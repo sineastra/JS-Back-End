@@ -74,7 +74,20 @@ router.post("/register",
 
 // Login route
 router.get("/login", guestsOnly, (req, res) => res.render("login"))
-router.post("/login", guestsOnly, login) // VALIDATORS, AFTER GUEST ONLY
+router.post("/login",
+	guestsOnly,
+	body("username")
+		.isLength({ min: 5 })
+		.withMessage("Username at least 5 symbols!")
+		.isAlphanumeric()
+		.withMessage("Username only english letters and digits!!"),
+	body("password")
+		.isLength({ min: 5 })
+		.withMessage("Password at least 5 symbols!")
+		.isAlphanumeric()
+		.withMessage("Password only english letters and digits!!"),
+	login,
+)
 
 // Logout route
 router.get("/logout", usersOnly, (req, res) => {
