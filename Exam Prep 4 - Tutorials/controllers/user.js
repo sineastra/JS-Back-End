@@ -62,7 +62,7 @@ router.post(
 		.withMessage("Passwords do not match!"),
 	register,
 	login,
-) // VALIDATORS,
+)
 
 // Login route
 router.get("/login", guestsOnly, (req, res) => res.render("login"))
