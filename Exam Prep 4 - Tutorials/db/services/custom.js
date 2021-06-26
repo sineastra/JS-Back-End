@@ -18,4 +18,9 @@ module.exports = {
 
 		custom.save()
 	},
+	includesNameInsensitive: async (name) => {
+		const regex = new RegExp(name, 'i')
+
+		return Custom.find({ title: { $regex: regex } }).lean()
+	},
 }

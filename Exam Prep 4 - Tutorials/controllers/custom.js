@@ -90,4 +90,11 @@ router.get('/enroll/:id', async (req, res) => {
 	res.redirect("/")
 })
 
+router.post('/search', async (req, res) => {
+	const searchParam = req.body.searchParam.toLocaleLowerCase()
+	const customs = await req.dbServices.custom.includesNameInsensitive(searchParam)
+
+	res.render('userHome', { customs })
+})
+
 module.exports = router
