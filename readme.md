@@ -1,3 +1,5 @@
+<h1 align="center">JavaScript Back-End</h1>
+
 <p align="center">
     <a href="https://softuni.bg/trainings/3357/js-back-end-may-2021">
         <img src="68747470733a2f2f6d69726f2e6d656469756d2e636f6d2f6d61782f3630302f312a59656b79754f5a474d772d6b474f4571553459505a672e6a706567.jpg"/>
